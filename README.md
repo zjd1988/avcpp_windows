@@ -58,6 +58,11 @@ After that  just install the same packages as above.
 
 ------
 
+### windows ffmpeg install
+```
+download from https://github.com/GyanD/codexffmpeg/releases
+```
+
 ## Build
 
 There are two ways to compile either with CMake or with meson.

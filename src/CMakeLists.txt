@@ -29,14 +29,17 @@ foreach(TARGET ${AV_TARGETS})
 
     target_compile_options(${TARGET} PRIVATE ${AVCPP_WARNING_OPTIONS})
     target_compile_definitions(${TARGET} PUBLIC __STDC_CONSTANT_MACROS)
-    target_link_libraries(${TARGET} PRIVATE Threads::Threads PUBLIC FFmpeg::FFmpeg)
+    #target_link_libraries(${TARGET} PRIVATE Threads::Threads PUBLIC FFmpeg::FFmpeg)
+    target_link_libraries(${TARGET} PRIVATE Threads::Threads ${FFMPEG_LIBRARIES})
     target_include_directories(${TARGET}
         PUBLIC
           $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/avcpp>
         PRIVATE
+          ${FFMPEG_INCLUDE_DIRS}
           ${CMAKE_CURRENT_SOURCE_DIR})
     set_target_properties(${TARGET} PROPERTIES PUBLIC_HEADER "${AV_HEADERS}")
+    set_target_properties(${TARGET} PROPERTIES VERBOSE_COMPILE 1)
 
     if(WIN32)
       target_link_libraries(${TARGET} PRIVATE ws2_32)
@@ -58,7 +61,8 @@ if (AVCPP_NOT_SUBPROJECT)
     #    APPEND
     #    FILE ${CMAKE_CURRENT_BINARY_DIR}/avcpp-targets.cmake)
 
-    install(TARGETS ${AV_TARGETS} FFmpeg
+    #install(TARGETS ${AV_TARGETS} FFmpeg
+    install(TARGETS ${AV_TARGETS}
         EXPORT avcpp-targets
         LIBRARY DESTINATION        ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION        ${CMAKE_INSTALL_LIBDIR}

@@ -12,9 +12,9 @@ project(AvCpp LANGUAGES CXX VERSION ${AVCPP_VERSION})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 set(FFMPEG_PKG_CONFIG_SUFFIX "" CACHE STRING "This suffix uses for FFmpeg component names searches by pkg-config")
-set(AV_ENABLE_STATIC On CACHE BOOL "Enable static library build (On)")
+set(AV_ENABLE_STATIC Off CACHE BOOL "Enable static library build (On)")
 set(AV_ENABLE_SHARED On CACHE BOOL "Enable shared library build (On)")
-set(AV_BUILD_EXAMPLES On CACHE BOOL "Build example applications (On)")
+set(AV_BUILD_EXAMPLES Off CACHE BOOL "Build example applications (On)")
 
 # Compiler-specific C++11 activation.
 set(CMAKE_CXX_STANDARD 17)
@@ -31,8 +31,10 @@ set (AVCPP_WARNING_OPTIONS
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads)
 
-find_package(FFmpeg
-    COMPONENTS AVCODEC AVFORMAT AVUTIL AVDEVICE AVFILTER SWSCALE SWRESAMPLE REQUIRED)
+include(common.cmake)
+find_FFMpeg("D:\\work\\github_codes\\ffmpeg-6.1-full_build-shared")
+#set(FFmpeg_Dir "C:\\Users\\94200\\Downloads\\ffmpeg-master-latest-win64-gpl-shared\\ffmpeg-master-latest-win64-gpl-shared\\lib\\pkgconfig")
+#find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT AVUTIL AVDEVICE AVFILTER SWSCALE SWRESAMPLE REQUIRED)
 
 add_subdirectory(src)
 
